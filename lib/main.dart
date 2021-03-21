@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+
+const List<String> uriNames = <String>[
+  'http://upload.wikimedia.org/wikipedia/commons/0/02/SVG_logo.svg',
+  'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/410.svg',
+  'https://upload.wikimedia.org/wikipedia/commons/b/b4/Chess_ndd45.svg',
+];
 
 void main() {
   runApp(MyApp());
@@ -31,7 +37,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  var uuid = Uuid();
 
   void _incrementCounter() {
     setState(() {
@@ -41,56 +46,38 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              uuid.v4(),
-              style: TextStyle(
-                  fontFamily: 'Comfortaa', fontWeight: FontWeight.bold),
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            Container(
-              height: 300.0,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(
-                          'https://picsum.photos/seed/picsum/200/1200'))),
-            ),
-            Image.network('https://picsum.photos/seed/picsum/200/300')
+            // SvgPicture.network(
+            //   'http://upload.wikimedia.org/wikipedia/commons/0/02/SVG_logo.svg',
+            //   placeholderBuilder: (BuildContext context) => Container(
+            //       padding: const EdgeInsets.all(30.0),
+            //       child: const CircularProgressIndicator()),
+            // ),
+            SvgPicture.asset('assets/images/logo.svg'),
+            CarouselSlider(
+              options: CarouselOptions(height: 400.0),
+              items: [1, 2, 3, 4, 5].map((i) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        decoration: BoxDecoration(color: Colors.amber),
+                        child: Text(
+                          'text $i',
+                          style: TextStyle(fontSize: 16.0),
+                        ));
+                  },
+                );
+              }).toList(),
+            )
           ],
         ),
       ),
