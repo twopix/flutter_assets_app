@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
   runApp(MyApp());
@@ -77,22 +77,6 @@ class _MyHomePageState extends State<MyHomePage> {
               uuid.v4(),
               style: TextStyle(
                   fontFamily: 'Comfortaa', fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              width: 200.0,
-              height: 100.0,
-              child: Shimmer.fromColors(
-                baseColor: Colors.red,
-                highlightColor: Colors.yellow,
-                child: Text(
-                  'Shimmer',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 40.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
             ),
             Text(
               '$_counter',
